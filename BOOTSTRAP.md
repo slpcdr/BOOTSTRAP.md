@@ -293,7 +293,7 @@ A task is **DONE** when:
 
 ### .agent/workflows/spec-driven-development.md
 
-```markdown
+````markdown
 ---
 description: Spec-driven development - write specification before implementation
 ---
@@ -320,11 +320,11 @@ description: Spec-driven development - write specification before implementation
    uv run mypy src/
    uv run pytest tests/ -v
    ```
-```
+````
 
 ### .agent/workflows/test-driven-development.md
 
-```markdown
+````markdown
 ---
 description: Test-driven development - write tests before implementation
 ---
@@ -348,7 +348,7 @@ uv run pytest tests/test_<module>.py::<test_name> -v
 ```bash
 uv run pytest tests/ -v
 ```
-```
+````
 
 ## 9. Progress Tracking (PROGRESS.md)
 
