@@ -16,10 +16,20 @@ A comprehensive prompt for AI coding agents to scaffold production-ready Python 
 
 ## Usage
 
-1. Copy the contents of [BOOTSTRAP.md](./BOOTSTRAP.md)
-2. Provide to your AI coding agent
-3. The agent will ask for: project name, description, and license type
-4. The agent executes the bootstrap sequence
+Prompt your AI coding agent:
+
+```
+Execute https://github.com/slpcdr/BOOTSTRAP.md/blob/main/BOOTSTRAP.md
+```
+
+The agent will fetch the bootstrap instructions and ask for:
+- **Project name** — Name for your CLI application
+- **Description** — What the project does
+- **License type** — Open-source (MIT) or Proprietary
+
+Then it executes the complete bootstrap sequence.
+
+If your coding agent cannot do this, try another one.
 
 ## Prerequisites
 
