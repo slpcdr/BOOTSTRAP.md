@@ -336,6 +336,7 @@ A task is **DONE** when:
 2. ✅ Code passes type checking (`uv run mypy`)
 3. ✅ Unit tests cover the functionality
 4. ✅ E2E test proves the command works
+5. ✅ Documentation updated (`README.md`, `PLAN.md`, `PROGRESS.md` as needed)
 ```
 
 ### .agent/memory.md
@@ -457,26 +458,31 @@ Use git worktrees to implement features in isolated branches. All changes requir
    uv run pytest tests/ -v
    ```
 
+6. **Update documentation if needed**
+   - Update `README.md` if user-facing behavior changed
+   - Update `PLAN.md` if architecture changed
+   - Update `PROGRESS.md` to mark completed items
+
 ## Requesting Review
 
-6. **Push feature branch**
+7. **Push feature branch**
    ```bash
    git push -u origin agent/<feature-name>
    ```
 
-7. **Notify user for review**
+8. **Notify user for review**
    - Signal that the feature is ready for user review
    - Do NOT merge to main without explicit user approval
 
 ## After Approval
 
 // turbo
-8. **Return to main repository**
+9. **Return to main repository**
    ```bash
    cd ../[PROJECT_NAME]
    ```
 
-9. **Merge approved changes** (user action or with user approval)
+10. **Merge approved changes** (user action or with user approval)
    ```bash
    git checkout main
    git merge --no-ff agent/<feature-name> -m "feat: <feature description>"
@@ -484,7 +490,7 @@ Use git worktrees to implement features in isolated branches. All changes requir
    ```
 
 // turbo
-10. **Clean up worktree**
+11. **Clean up worktree**
     ```bash
     git worktree remove ../[PROJECT_NAME]-wt-<feature>
     git branch -d agent/<feature-name>
