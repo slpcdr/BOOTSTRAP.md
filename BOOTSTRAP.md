@@ -1,5 +1,7 @@
 # Python Project Bootstrap
 
+<!-- https://github.com/slpcdr/BOOTSTRAP.md -->
+
 ## Before You Begin
 
 **Ask the user for the following information before proceeding:**
