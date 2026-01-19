@@ -50,6 +50,7 @@ This allows future updates — when the bootstrap template evolves, the user can
 │   ├── AI_README.md        # Context for AI agents
 │   ├── memory.md           # Active context & lessons learned
 │   └── workflows/
+│       ├── feature-workflow.md
 │       ├── spec-driven-development.md
 │       └── test-driven-development.md
 ├── .env.example            # Environment variable template
@@ -407,6 +408,115 @@ uv run pytest tests/test_<module>.py::<test_name> -v
 ```bash
 uv run pytest tests/ -v
 ```
+````
+
+### .agent/workflows/feature-workflow.md
+
+````markdown
+---
+description: Feature development using git worktrees for isolation and review
+---
+
+# Feature Workflow
+
+Use git worktrees to implement features in isolated branches. All changes require the user's review before merging to main.
+
+## Starting a Feature
+
+// turbo
+1. **Create worktree and feature branch**
+   ```bash
+   # From project root
+   git worktree add ../[PROJECT_NAME]-wt-<feature> -b agent/<feature-name>
+   cd ../[PROJECT_NAME]-wt-<feature>
+   ```
+
+2. **Initialize agent context** (if using agent-specific context files)
+   - Read `.agent/AI_README.md` for project conventions
+   - Review relevant specs in `docs/specs/`
+
+## During Development
+
+3. **Make atomic commits with conventional messages**
+   ```bash
+   git add -p  # Stage only related changes
+   git commit -m "feat(<scope>): <description>"
+   ```
+
+4. **Keep worktree updated with main** (for long-running features)
+   ```bash
+   git fetch origin main
+   git rebase origin/main
+   ```
+
+// turbo
+5. **Run checks before pushing**
+   ```bash
+   uv run ruff check src/
+   uv run mypy src/
+   uv run pytest tests/ -v
+   ```
+
+## Requesting Review
+
+6. **Push feature branch**
+   ```bash
+   git push -u origin agent/<feature-name>
+   ```
+
+7. **Notify user for review**
+   - Signal that the feature is ready for user review
+   - Do NOT merge to main without explicit user approval
+
+## After Approval
+
+// turbo
+8. **Return to main repository**
+   ```bash
+   cd ../[PROJECT_NAME]
+   ```
+
+9. **Merge approved changes** (user action or with user approval)
+   ```bash
+   git checkout main
+   git merge --no-ff agent/<feature-name> -m "feat: <feature description>"
+   git push origin main
+   ```
+
+// turbo
+10. **Clean up worktree**
+    ```bash
+    git worktree remove ../[PROJECT_NAME]-wt-<feature>
+    git branch -d agent/<feature-name>
+    ```
+
+## Worktree Best Practices
+
+| Practice | Rationale |
+|----------|----------|
+| One feature per worktree | Maintains isolation and context clarity |
+| Short-lived branches | Reduces merge conflicts and drift |
+| Descriptive branch names | `agent/add-auth`, `agent/fix-db-connection` |
+| Frequent rebasing | Keeps feature branch current with main |
+| Atomic commits | Easier to review and revert if needed |
+
+## Directory Structure
+
+```
+parent-dir/
+├── [PROJECT_NAME]/              # Main repository (on main branch)
+├── [PROJECT_NAME]-wt-auth/      # Worktree for auth feature
+├── [PROJECT_NAME]-wt-api/       # Worktree for API feature
+└── [PROJECT_NAME]-wt-bugfix/    # Worktree for hotfix
+```
+
+## Why Worktrees for AI Agents?
+
+- **Isolation**: Each worktree has independent file state—no cross-contamination
+- **Context preservation**: AI maintains understanding without branch-switching disruption
+- **Parallel execution**: Multiple tasks can run simultaneously
+- **Shared history**: All worktrees share the same Git object database
+- **Review gates**: Changes are staged in branches, merged only after user approval
 ````
 
 ## 9. Progress Tracking (PROGRESS.md)
