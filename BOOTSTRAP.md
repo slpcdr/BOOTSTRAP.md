@@ -1,3 +1,19 @@
+# Python Project Bootstrap
+
+## Before You Begin
+
+**Ask the user for the following information before proceeding:**
+
+1. **Project Name** — The name for the CLI application (e.g., `my-tool`)
+2. **Description** — A brief description of what the project does
+3. **License Type** — Is this project:
+   - **Open-source** → Use `MIT` license
+   - **Proprietary/Closed-source** → Use `LicenseRef-Proprietary` with "All Rights Reserved"
+
+Once you have these answers, replace `[PROJECT_NAME]`, `[DESCRIPTION]`, and `[LICENSE]` throughout this document with the user's responses, then execute the bootstrap sequence.
+
+---
+
 Create a new Python CLI application called **[PROJECT_NAME]** with the following foundational structure. Focus on setting up the development infrastructure first—the business logic will come later.
 
 ## Project Structure
@@ -88,20 +104,16 @@ markers = [
 [tool.pip-licenses]
 from = "mixed"
 partial-match = true
-ignore-packages = ["mic-calibrator"]  # Exclude own proprietary package
+ignore-packages = ["[PROJECT_NAME]"]  # Exclude own proprietary package
 allow-only = "MIT;Apache;BSD;ISC;PSF;Python Software Foundation;MPL;Unlicense;WTFPL;CC0;0BSD;Zlib;Public Domain"
 ```
 
 ### License Configuration
 
-For **proprietary/closed-source** projects, use:
-
 ```toml
 [project]
-license = "LicenseRef-Proprietary"
+license = "[LICENSE]"
 ```
-
-For open-source projects, use `license = "MIT"` or another appropriate SPDX identifier.
 
 ## 2. Pre-commit Hooks (.pre-commit-config.yaml)
 
@@ -270,7 +282,7 @@ Create fixtures for:
 # AI Agent README
 
 ## Project Overview
-**[PROJECT_NAME]** - [Brief description]
+**[PROJECT_NAME]** - [DESCRIPTION]
 
 | Component | Location | Purpose |
 |-----------|----------|---------|
@@ -447,7 +459,7 @@ venv/
 - Configuration table
 - Development commands
 - Project structure
-- License section: Use `Proprietary - All Rights Reserved` for closed-source, or `MIT` for open-source
+- License section: Use `[LICENSE]` (e.g. `Proprietary - All Rights Reserved` or `MIT`)
 
 ## 12. License Compliance (For Proprietary Projects)
 

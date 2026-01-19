@@ -17,9 +17,9 @@ A comprehensive prompt for AI coding agents to scaffold production-ready Python 
 ## Usage
 
 1. Copy the contents of [BOOTSTRAP.md](./BOOTSTRAP.md)
-2. Replace `[PROJECT_NAME]` with your project name
-3. Replace `[DESCRIPTION]` with a brief description
-4. Provide to your AI coding agent
+2. Provide to your AI coding agent
+3. The agent will ask for: project name, description, and license type
+4. The agent executes the bootstrap sequence
 
 ## Prerequisites
 
