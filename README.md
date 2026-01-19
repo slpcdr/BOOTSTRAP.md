@@ -50,6 +50,18 @@ The agent will fetch the latest version, compare it with your local copy, and ap
 
 **Tip:** Use an agent manager to automate this across multiple repositories.
 
+## Starting a New Session
+
+To resume work on this project with an AI agent:
+
+1. **Initialize the agent context** by prompting:
+   ```
+   Read .agent/AI_README.md to understand the project context, then [your request].
+   ```
+   
+2. **Review active context**:
+   The agent should check `.agent/memory.md` for recent lessons learned and `PLAN.md` for the current roadmap status.
+
 ## Prerequisites
 
 Requires [uv](https://docs.astral.sh/uv/) for package management:

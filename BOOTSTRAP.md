@@ -336,7 +336,7 @@ A task is **DONE** when:
 2. ✅ Code passes type checking (`uv run mypy`)
 3. ✅ Unit tests cover the functionality
 4. ✅ E2E test proves the command works
-5. ✅ Documentation updated (`README.md`, `PLAN.md`, `PROGRESS.md` as needed)
+5. ✅ Documentation updated (`README.md`, `PLAN.md`, `PROGRESS.md`, `.agent/AI_README.md`, `.agent/memory.md` as needed)
 ```
 
 ### .agent/memory.md
@@ -462,6 +462,8 @@ Use git worktrees to implement features in isolated branches. All changes requir
    - Update `README.md` if user-facing behavior changed
    - Update `PLAN.md` if architecture changed
    - Update `PROGRESS.md` to mark completed items
+   - Update `.agent/AI_README.md` if project conventions/context changed
+   - Update `.agent/memory.md` with any new lessons learned
 
 ## Requesting Review
 
