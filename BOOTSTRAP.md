@@ -50,6 +50,7 @@ Use `hatchling` as the build backend. Include:
 - `ruff>=0.8.0`
 - `mypy>=1.0.0`
 - `pre-commit>=3.6.0`
+- `pip-licenses>=5.0.0`
 
 **Tool configuration:**
 
@@ -83,7 +84,24 @@ markers = [
     "integration: tests requiring real API keys",
     "slow: slow running tests",
 ]
+
+[tool.pip-licenses]
+from = "mixed"
+partial-match = true
+ignore-packages = ["mic-calibrator"]  # Exclude own proprietary package
+allow-only = "MIT;Apache;BSD;ISC;PSF;Python Software Foundation;MPL;Unlicense;WTFPL;CC0;0BSD;Zlib;Public Domain"
 ```
+
+### License Configuration
+
+For **proprietary/closed-source** projects, use:
+
+```toml
+[project]
+license = "LicenseRef-Proprietary"
+```
+
+For open-source projects, use `license = "MIT"` or another appropriate SPDX identifier.
 
 ## 2. Pre-commit Hooks (.pre-commit-config.yaml)
 
@@ -118,6 +136,21 @@ repos:
       - id: conventional-pre-commit
         stages: [commit-msg]
 ```
+
+## 2.1. License Compliance Pre-commit Hook
+
+Add a license-check hook to the `local` repo section with **smart file triggering** (only runs when dependency files change):
+
+```yaml
+      - id: license-check
+        name: Check dependency licenses
+        entry: uv run pip-licenses --from=mixed
+        language: system
+        files: ^(pyproject\.toml|uv\.lock)$
+        pass_filenames: false
+```
+
+> **Note**: This hook only runs when `pyproject.toml` or `uv.lock` is staged. Regular Python file edits won't trigger it.
 
 ## 3. Configuration (src/config.py)
 
@@ -414,6 +447,62 @@ venv/
 - Configuration table
 - Development commands
 - Project structure
+- License section: Use `Proprietary - All Rights Reserved` for closed-source, or `MIT` for open-source
+
+## 12. License Compliance (For Proprietary Projects)
+
+For closed-source/proprietary projects, prevent accidental introduction of "viral" licenses (GPL/AGPL):
+
+### GitHub Actions Workflow (.github/workflows/license-audit.yml)
+
+```yaml
+name: License Audit
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  license-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync --extra dev
+      - name: Check licenses
+        run: uv run pip-licenses --from=mixed
+      - name: Generate license report
+        if: always()
+        run: uv run pip-licenses --format=markdown --from=mixed > license-report.md
+      - name: Upload license report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: license-report
+          path: license-report.md
+```
+
+### Allowed Licenses (Safe for Proprietary Use)
+
+| License | Notes |
+|---------|-------|
+| MIT | Most permissive, only requires attribution |
+| Apache | Includes explicit patent grant |
+| BSD | 2-clause and 3-clause variants safe |
+| ISC | Functionally equivalent to MIT |
+| PSF | Python Software Foundation License |
+| MPL 2.0 | Weak copyleft - safe if not modifying source files |
+| Unlicense, CC0, 0BSD | Public domain dedications |
+| Zlib | Permissive, common for compression libs |
+
+### Manual License Check
+
+```bash
+# View all dependency licenses
+uv run pip-licenses --from=mixed
+
+# Check against allow-list (fails on violation)
+uv run pip-licenses --from=mixed --allow-only="MIT;Apache;BSD;ISC;PSF;Python Software Foundation;MPL;Unlicense;WTFPL;CC0;0BSD;Zlib;Public Domain" --partial-match
+```
 
 ## Setup Instructions (Using uv)
 

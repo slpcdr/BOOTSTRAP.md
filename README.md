@@ -10,6 +10,7 @@ A comprehensive prompt for AI coding agents to scaffold production-ready Python 
 - **Strict code quality** via ruff + mypy
 - **Automated checks** via pre-commit hooks
 - **Conventional commits** enforcement
+- **License compliance** checks for proprietary projects (pip-licenses)
 - **AI-friendly development** with documented workflows
 - **Spec-driven and TDD workflows**
 
