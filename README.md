@@ -31,6 +31,23 @@ Then it executes the complete bootstrap sequence.
 
 If your coding agent cannot do this, try another one.
 
+### Keeping Projects Updated
+
+Storing a copy of `BOOTSTRAP.md` in your project's Git repository allows you to keep your projects up to date. When the bootstrap template evolves, you can prompt your agent:
+
+```
+The BOOTSTRAP.md that created this project has a new version at
+https://github.com/slpcdr/BOOTSTRAP.md/blob/main/BOOTSTRAP.md
+— please update this project accordingly.
+```
+
+The agent will fetch the latest version, compare it with your local copy, and apply relevant updates to your project structure, tooling, or workflows.
+
+> [!CAUTION]
+> **Security note:** The user should always review agent-proposed changes before committing. Do not allow automatic merging of updates from external sources without thorough review.
+
+**Tip:** Use an agent manager to automate this across multiple repositories.
+
 ## Prerequisites
 
 Requires [uv](https://docs.astral.sh/uv/) for package management:

@@ -16,6 +16,18 @@ Once you have these answers, replace `[PROJECT_NAME]`, `[DESCRIPTION]`, and `[LI
 
 Create a new Python CLI application called **[PROJECT_NAME]** with the following foundational structure. Focus on setting up the development infrastructure first—the business logic will come later.
 
+## 0. Save Bootstrap File
+
+Download a copy of this bootstrap file into the project root:
+
+```bash
+curl -o BOOTSTRAP.md https://raw.githubusercontent.com/slpcdr/BOOTSTRAP.md/main/BOOTSTRAP.md
+```
+
+This allows future updates — when the bootstrap template evolves, the user can prompt an AI agent to fetch the latest version and update their projects accordingly.
+
+> **Security note:** The user should always review agent-proposed changes before committing. Do not allow automatic merging of updates from external sources without a thorough review.
+
 ## Project Structure
 
 ```
